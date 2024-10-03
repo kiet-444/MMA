@@ -1,25 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@android:color/white">
 
+    <!-- Name Input Field -->
     <EditText
         android:id="@+id/nameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter name" />
+        android:hint="Enter name"
+        android:inputType="textPersonName"
+        android:textSize="16sp"
+        android:padding="12dp"
+        android:background="@drawable/edit_text_background"
+        android:layout_marginBottom="12dp" />
 
+    <!-- Phone Number Input Field -->
     <EditText
         android:id="@+id/phoneEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter phone number" />
+        android:hint="Enter phone number"
+        android:inputType="phone"
+        android:textSize="16sp"
+        android:padding="12dp"
+        android:background="@drawable/edit_text_background"
+        android:layout_marginBottom="24dp" />
 
+    <!-- Save Button -->
     <Button
         android:id="@+id/saveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Save" />
+        android:text="Save"
+        android:backgroundTint="@color/colorPrimary"
+        android:textColor="@android:color/white"
+        android:paddingVertical="12dp"
+        android:paddingHorizontal="24dp"
+        android:layout_gravity="center_horizontal" />
 </LinearLayout>

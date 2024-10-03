@@ -1,101 +1,91 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--<LinearLayout-->
-<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent"-->
-<!--    android:orientation="vertical"-->
-<!--    android:padding="16dp">-->
-
-<!--    &lt;!&ndash; Hiển thị tên liên hệ &ndash;&gt;-->
-<!--    <TextView-->
-<!--        android:id="@+id/detailName"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Tên Liên Hệ"-->
-<!--        android:textSize="20sp"-->
-<!--        android:textStyle="bold"-->
-<!--        android:layout_marginBottom="8dp" />-->
-
-<!--    &lt;!&ndash; Hiển thị số điện thoại &ndash;&gt;-->
-<!--    <TextView-->
-<!--        android:id="@+id/detailPhone"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Số Điện Thoại"-->
-<!--        android:textSize="18sp"-->
-<!--        android:layout_marginBottom="16dp" />-->
-
-<!--    &lt;!&ndash; Nút Gọi &ndash;&gt;-->
-<!--    <Button-->
-<!--        android:id="@+id/callButton"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Gọi Điện"-->
-<!--        android:layout_marginBottom="8dp" />-->
-
-<!--    &lt;!&ndash; Nút Gửi SMS &ndash;&gt;-->
-<!--    <Button-->
-<!--        android:id="@+id/smsButton"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Gửi SMS" />-->
-<!--</LinearLayout>-->
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp">
 
-    <!-- Tên liên hệ -->
+    <!-- Contact Name -->
     <TextView
         android:id="@+id/detailName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:text="Tên Liên Hệ"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_marginTop="16dp"
+        android:gravity="center" />
 
-    <!-- Số điện thoại -->
+    <!-- Phone Number -->
     <TextView
         android:id="@+id/detailPhone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
+        android:textColor="@android:color/darker_gray"
+        android:text="Số Điện Thoại"
         app:layout_constraintTop_toBottomOf="@id/detailName"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="8dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        android:gravity="center" />
 
-    <!-- LinearLayout cho các nút ở khu vực dưới -->
-    <LinearLayout
-        android:id="@+id/buttonLayout"
-        android:layout_width="match_parent"
+    <!-- Call Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/callButton"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_marginTop="24dp"
-        app:layout_constraintBottom_toBottomOf="parent">  <!-- Kết nối với đáy màn hình -->
+        android:text="Call"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/smsButton"
+        app:layout_constraintWidth_percent="0.32"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        app:cornerRadius="8dp"
+        app:icon="@drawable/ic_phone"
+        app:iconGravity="start"
+        android:textColor="@android:color/white"
+        app:backgroundTint="@color/colorPrimary" />
 
-        <Button
-            android:id="@+id/callButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Call" />
+    <!-- Send SMS Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/smsButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="SMS"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/callButton"
+        app:layout_constraintEnd_toStartOf="@id/backButton"
+        app:layout_constraintWidth_percent="0.32"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        app:cornerRadius="8dp"
+        app:icon="@drawable/ic_sms"
+        app:iconGravity="start"
+        android:textColor="@android:color/white"
+        app:backgroundTint="@color/colorPrimary" />
 
-        <Button
-            android:id="@+id/smsButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Send SMS" />
+    <!-- Back Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/backButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/smsButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.32"
+        android:layout_marginBottom="16dp"
+        app:cornerRadius="8dp"
+        app:icon="@drawable/ic_menu_revert"
+        app:iconGravity="start"
+        android:textColor="@android:color/white"
+        app:backgroundTint="@color/colorPrimary" />
 
-        <Button
-            android:id="@+id/backButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Back" />
-    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

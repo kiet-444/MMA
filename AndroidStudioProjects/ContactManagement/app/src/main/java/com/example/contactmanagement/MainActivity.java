@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         contactList = new ArrayList<>();
 
         // Tải danh sách liên hệ từ SharedPreferences
-        loadContacts();
+//        loadContacts();
 
         adapter = new ContactAdapter(contactList, this);
         recyclerView.setAdapter(adapter);
@@ -48,30 +48,30 @@ public class MainActivity extends AppCompatActivity {
             String phone = data.getStringExtra("phone");
             contactList.add(new Contact(name, phone));
             adapter.notifyDataSetChanged();
-            saveContacts();  // Lưu danh sách sau khi thêm
+//            saveContacts();  // Lưu danh sách sau khi thêm
         }
     }
 
-    // Phương thức lưu danh sách liên hệ
-    private void saveContacts() {
-        SharedPreferences sharedPreferences = getSharedPreferences("contact_prefs", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(contactList);
-        editor.putString("contact_list", json);
-        editor.apply();
-    }
-
-    // Phương thức tải danh sách liên hệ
-    private void loadContacts() {
-        SharedPreferences sharedPreferences = getSharedPreferences("contact_prefs", MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = sharedPreferences.getString("contact_list", null);
-        TypeToken<ArrayList<Contact>> token = new TypeToken<ArrayList<Contact>>() {};
-        contactList = gson.fromJson(json, token.getType());
-
-        if (contactList == null) {
-            contactList = new ArrayList<>(); // Khởi tạo danh sách rỗng nếu chưa có
-        }
-    }
+//     Phương thức lưu danh sách liên hệ
+//    private void saveContacts() {
+//        SharedPreferences sharedPreferences = getSharedPreferences("contact_prefs", MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+//        Gson gson = new Gson();
+//        String json = gson.toJson(contactList);
+//        editor.putString("contact_list", json);
+//        editor.apply();
+//    }
+//
+//    // Phương thức tải danh sách liên hệ
+//    private void loadContacts() {
+//        SharedPreferences sharedPreferences = getSharedPreferences("contact_prefs", MODE_PRIVATE);
+//        Gson gson = new Gson();
+//        String json = sharedPreferences.getString("contact_list", null);
+//        TypeToken<ArrayList<Contact>> token = new TypeToken<ArrayList<Contact>>() {};
+//        contactList = gson.fromJson(json, token.getType());
+//
+//        if (contactList == null) {
+//            contactList = new ArrayList<>(); // Khởi tạo danh sách rỗng nếu chưa có
+//        }
+//    }
 }
