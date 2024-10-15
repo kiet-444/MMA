@@ -4,7 +4,7 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { Card, Text, IconButton } from "react-native-paper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Dimensions } from "react-native";
-
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function Cards(props) {
   console.log("Check props: ",props);
@@ -54,6 +54,7 @@ export default function Cards(props) {
   const isFavorite = favoriteList.some(
     (favor) => Number(favor.id) === Number(props.id)
   );
+
 
   function handlePress(getId) {
     navigation.navigate("Details", {
@@ -105,12 +106,14 @@ export default function Cards(props) {
               <Text style={styles.detail}>Price: ${props.price}</Text>
             </Card.Content>
           </Card>
+          {/* <TouchableOpacity onPress={() => handleFavorite(id)}>
           <IconButton
             icon={isFavorite ? "cards-heart" : "cards-heart-outline"}
             style={styles.iconButton}
             iconColor="red"
             onPress={() => addToFavoriteList(props)}
           />
+          </TouchableOpacity> */}
         </View>
       </Pressable>
     </Animated.View>

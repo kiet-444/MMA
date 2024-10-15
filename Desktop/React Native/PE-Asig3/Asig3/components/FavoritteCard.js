@@ -8,7 +8,8 @@ export default function FavoriteCard(props) {
 
   function handlePress(getId) {
     navigation.navigate("Details", {
-      itemId: getId,
+      itemId: getId,r
+    
     });
   }
 
