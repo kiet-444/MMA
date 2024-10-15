@@ -98,13 +98,14 @@ export default function FavoriteList() {
     );
   }
 
+
   return (
     <ScrollView style={{ backgroundColor: "white" }}>
       {favoriteList.map((favor) => (
         <FavoritteCard
           key={favor.id}
           id={favor.id}
-          name={favor.name}
+          name={favor.names}
           color={favor.color}
           weight={favor.weight}
           price={favor.price}

@@ -13,43 +13,46 @@ export default function DetailsPage() {
     const [loading, setLoading] = useState(true);
     const [favoriteList, setFavoriteList] = useState([]);
     
-
     console.log("Received productID:", productID);
 
+    // Fetch product details from API
     const fetchProductDetails = async () => {
-    try {
-        const response = await axios.get(
-            `https://66f979feafc569e13a98e57b.mockapi.io/api/v1/mmaapp/name/`
-        );
+        try {
+            const response = await axios.get(
+                `https://66f979feafc569e13a98e57b.mockapi.io/api/v1/mmaapp/name/`
+            );
 
-        // console.log("Fetched product details:", response.data);
-        
-        // const foundProduct = response.data.find((item) => item.id === productID);
-        console.log("Found product:", foundProduct);
-        setProduct(response.data);
-        setLoading(false);
-    } catch (error) {
-        console.error("Error fetching product details:", error);
-        setLoading(false);
-    }
-};
-    console.log("undefined ",product);
+           
+            console.log("Fetched product details:", response.data);
 
-    const productByCate  = product?.flatMap((cate) =>{
-        return cate.items.flatMap((item)=> {
-            return {
-                items: item,
-                category: cate.name,
-                // id : index + 1,
-            };
-        });
-    });
+            // Lấy tất cả các sản phẩm từ các category
+            const productByCate = response.data.flatMap((cate) => {
+                return cate.items.map((item) => ({
+                    ...item, 
+                    category: cate.name, 
+                }));
+            });
 
-    const productDetails = productByCate?.flatMap((detail)=> {
-        return Number(detail.items.id) === Number(productID)
+            // Tìm sản phẩm có id khớp với productID
+            const foundProduct = productByCate.find((detail) => {
+                return Number(detail.id) === Number(productID);
+            });
 
-    });
+            if (foundProduct) {
+                console.log("Found product:", foundProduct);
+                setProduct(foundProduct);  // Cập nhật sản phẩm tìm thấy
+            } else {
+                console.log("No product found with the given ID");
+            }
 
+            setLoading(false);
+        } catch (error) {
+            console.error("Error fetching product details:", error);
+            setLoading(false);
+        }
+    };
+
+    // Load favorites from AsyncStorage
     const loadFavorites = async () => {
         try {
             const savedFavorites = await AsyncStorage.getItem("favorites");
@@ -62,6 +65,7 @@ export default function DetailsPage() {
         }
     };
 
+    // Add or remove from favorite list
     const addToFavoriteList = async (item) => {
         try {
             let updatedFavorites = [...favoriteList];
@@ -82,10 +86,10 @@ export default function DetailsPage() {
 
     useFocusEffect(
         React.useCallback(() => {
-          fetchProductDetails();
-          loadFavorites();
+            fetchProductDetails();
+            loadFavorites();
         }, [])
-      );
+    );
 
     const isFavorite = favoriteList.some((favor) => 
         Number(favor.id) === Number(productID));
@@ -98,7 +102,7 @@ export default function DetailsPage() {
         );
     }
 
-    if (!product || Object.keys(product).length === 0) {
+    if (!product) {
         return (
             <View style={styles.loadingContainer}>
                 <Text>Product not found.</Text>
@@ -109,17 +113,19 @@ export default function DetailsPage() {
     return (
         <ScrollView style={styles.scrollView}>
             <View style={styles.container}>
-                <Image style={styles.picture} 
-                source={{ uri: `${productDetails.items.image}` }} />
+                <Image 
+                    style={styles.picture} 
+                    source={{ uri: `${product.image}` }} 
+                />
                 <View style={styles.detailContainer}>
-                    <Text style={styles.detailName}>{productDetails.items.name}</Text>
-                    <Text style={styles.position}>{productDetails.items.color}</Text>
-                    <Text style={styles.price}>$ {productDetails.items.price}</Text>
+                    <Text style={styles.detailName}>{product.names}</Text>
+                    <Text style={styles.position}>{product.color}</Text>
+                    <Text style={styles.price}>$ {product.price}</Text>
                     <View style={styles.favoriteContainer}>
                         <View style={styles.iconContainer}>
                             <Button 
-                            onPress={() => addToFavoriteList(productDetails.items)} 
-                            style={styles.btnPressable}>
+                                onPress={() => addToFavoriteList(product)} 
+                                style={styles.btnPressable}>
                                 <Icon
                                     source={isFavorite ? "cards-heart" : "cards-heart-outline"}
                                     size={25}
@@ -130,24 +136,20 @@ export default function DetailsPage() {
                     </View>
                     <View style={styles.detailFrame}>
                         <Text style={styles.detailTitle}>
-                            Origin: <Text style={styles.detailInfo}>{productDetails.items.origin}</Text>
+                            Origin: <Text style={styles.detailInfo}>{product.origin}</Text>
                         </Text>
                         <Divider style={{ width: "100%", marginVertical: 10 }} bold />
                         <Text style={styles.detailTitle}>
                             Weight:{"\t"}
-                            <Text style={styles.detailInfo}>{productDetails.items.weight} grams</Text>
+                            <Text style={styles.detailInfo}>{product.weight} grams</Text>
                         </Text>
-                        {/* <Text style={styles.detailTitle}>
-                            Price:{"\t"}
-                            <Text style={styles.detailInfo}>${productDetails.items.price}</Text>
-                        </Text> */}
                         <Text style={styles.detailTitle}>
                             Is Top of the Week:{"\t"}
-                            <Text style={styles.detailInfo}>{productDetails.items.isTopOfTheWeek ? "Yes" : "No"}</Text>
+                            <Text style={styles.detailInfo}>{product.isTopOfTheWeek ? "Yes" : "No"}</Text>
                         </Text>
                         <Text style={styles.detailTitle}>
                             Bonus:{"\t"}
-                            <Text style={styles.detailInfo}>{productDetails.items.bonus !== "No" ? productDetails.bonus : "No bonus"}</Text>
+                            <Text style={styles.detailInfo}>{product.bonus !== "No" ? product.bonus : "No bonus"}</Text>
                         </Text>
                     </View>
                 </View>

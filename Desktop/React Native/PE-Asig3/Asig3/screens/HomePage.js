@@ -17,7 +17,11 @@ export default function HomePage() {
                 const response = await axios.get(
                     'https://66f979feafc569e13a98e57b.mockapi.io/api/v1/mmaapp/name'
                 );
+
                 console.log("Fetched data: ", response.data);
+
+
+                
                 setProducts(response.data);
                 setLoading(false);
             } catch (error) {
